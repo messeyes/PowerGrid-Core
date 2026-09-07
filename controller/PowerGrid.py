@@ -4,6 +4,7 @@ import time
 
 from model.Leitura import Leitura
 from model.Sensor import Sensor
+from service.Buscador import Buscador
 from service.Ordenador import Ordenador
 
 
@@ -65,6 +66,12 @@ class PowerGrid:
 
         if resultado is not None:
             self.sensor.leituras = resultado
+
+
+    # pega a ordem do ordenar_por_id pra ser a mesma ordem da busca binaria
+    def buscar_por_sensor_id(self, sensor_id):
+        self.ordenar_por_id("merge")
+        return Buscador.busca_binaria(self.obter_leituras(), sensor_id)
 
 
     # testes de tempo

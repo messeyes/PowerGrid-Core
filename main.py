@@ -83,6 +83,29 @@ def testar_desempenho(controller):
     controller.exibir_resultados(resultados)
 
 
+def buscar_sensor(controller):
+    print("\n========== BUSCA BINÁRIA ==========")
+
+    if controller.quantidade_leituras() == 0:
+        print("\nNenhuma leitura pode ser feita. Use a opção 1 - Telemetria primeiro.")
+        return
+
+    try:
+        sensor_id = int(input("\nDigite o ID do sensor: "))
+    except ValueError:
+        print("\nID inválido. Digite um número inteiro.")
+        return
+
+    leituras = controller.buscar_por_sensor_id(sensor_id)
+
+    if leituras:
+        print(f"\nQuantidade de leituras: {len(leituras)}")
+        for leitura in leituras:
+            print(leitura)
+    else:
+        print("\nNenhuma leitura foi encontrada para esse sensor.")
+
+
 def main():
 
     controller = PowerGrid()
@@ -103,7 +126,7 @@ def main():
             testar_desempenho(controller)
 
         elif opcao == "4":
-            print("\nBusca binária - ainda não implementada.")
+            buscar_sensor(controller)
 
         elif opcao == "5":
             print("\nEstrutura hierárquica - ainda não implementada.")
