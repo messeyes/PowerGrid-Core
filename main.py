@@ -1,4 +1,5 @@
 from controller.PowerGrid import PowerGrid
+from model.hierarquia import estrutura_hierarquica
 
 
 def mostrar_menu():
@@ -15,6 +16,10 @@ def mostrar_menu():
     print("========================================")
 
 
+def pausar():
+    input("\nPressione Enter para voltar ao menu...")
+
+
 def telemetria(controller):
     print("\n========== TELEMETRIA ==========")
 
@@ -27,6 +32,8 @@ def telemetria(controller):
 
     for leitura in controller.obter_leituras():
         print(leitura)
+
+    pausar()
 
 
 def testar_ordenacao(controller):
@@ -55,6 +62,7 @@ def testar_ordenacao(controller):
 
     if opcao not in algoritmos:
         print("\nOpção inválida.")
+        pausar()
         return
 
     algoritmo = algoritmos[opcao]
@@ -64,7 +72,6 @@ def testar_ordenacao(controller):
     for leitura in leituras:
         print(leitura)
 
-    # Coloca as leituras no sensor
     controller.sensor.leituras = leituras
 
     controller.ordenar_por_id(algoritmo)
@@ -74,6 +81,8 @@ def testar_ordenacao(controller):
     for leitura in controller.obter_leituras():
         print(leitura)
 
+    pausar()
+
 
 def testar_desempenho(controller):
     print("\n========== DESEMPENHO ==========")
@@ -82,18 +91,22 @@ def testar_desempenho(controller):
 
     controller.exibir_resultados(resultados)
 
+    pausar()
+
 
 def buscar_sensor(controller):
     print("\n========== BUSCA BINÁRIA ==========")
 
     if controller.quantidade_leituras() == 0:
         print("\nNenhuma leitura pode ser feita. Use a opção 1 - Telemetria primeiro.")
+        pausar()
         return
 
     try:
         sensor_id = int(input("\nDigite o ID do sensor: "))
     except ValueError:
         print("\nID inválido. Digite um número inteiro.")
+        pausar()
         return
 
     leituras = controller.buscar_por_sensor_id(sensor_id)
@@ -104,6 +117,15 @@ def buscar_sensor(controller):
             print(leitura)
     else:
         print("\nNenhuma leitura foi encontrada para esse sensor.")
+
+    pausar()
+
+
+def mostrar_hierarquia():
+    print("\n========== ESTRUTURA HIERÁRQUICA ==========")
+    cos = estrutura_hierarquica()
+    cos.exibir()
+    pausar()
 
 
 def main():
@@ -129,10 +151,11 @@ def main():
             buscar_sensor(controller)
 
         elif opcao == "5":
-            print("\nEstrutura hierárquica - ainda não implementada.")
+            mostrar_hierarquia()
 
         elif opcao == "6":
             print("\nRelatórios - ainda não implementados.")
+            pausar()
 
         elif opcao == "0":
             print("\nEncerrando o PowerGrid Core...")
@@ -140,6 +163,7 @@ def main():
 
         else:
             print("\nOpção inválida. Escolha um número do menu.")
+            pausar()
 
 
 if __name__ == "__main__":

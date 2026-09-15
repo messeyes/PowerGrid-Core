@@ -12,23 +12,24 @@ class No:
             filho.exibir(nivel + 1)
 
 
-cos = No("Centro de Operações (COS)")
+def estrutura_hierarquica():
+    cos = No("Centro de Operações (COS)")
 
-norte = No("Subestação Norte")
-sul = No("Subestação Sul")
+    norte = No("Subestação Norte")
+    sul = No("Subestação Sul")
 
-cos.adicionar(norte)
-cos.adicionar(sul)
+    cos.adicionar(norte)
+    cos.adicionar(sul)
 
-transformador = No("Transformador")
-disjuntor = No("Disjuntor")
+    transformador = No("Transformador")
+    disjuntor = No("Disjuntor")
 
-norte.adicionar(transformador)
-sul.adicionar(disjuntor)
+    norte.adicionar(transformador)
+    sul.adicionar(disjuntor)
 
-transformador.adicionar(No("Sensor de Temperatura"))
-transformador.adicionar(No("Sensor de Tensão"))
-disjuntor.adicionar(No("Sensor de Corrente"))
-disjuntor.adicionar(No("Logs da Rede"))
+    transformador.adicionar(No("Sensor de Temperatura"))
+    transformador.adicionar(No("Sensor de Tensão"))
+    disjuntor.adicionar(No("Sensor de Corrente"))
+    disjuntor.adicionar(No("Logs da Rede"))
 
-cos.exibir()
+    return cos
