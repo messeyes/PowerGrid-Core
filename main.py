@@ -1,5 +1,5 @@
 from controller.PowerGrid import PowerGrid
-from model.hierarquia import estrutura_hierarquica
+from model.hierarquia import inserir, buscar, em_ordem, pre_ordem, pos_ordem, esta_balanceada
 
 
 def mostrar_menu():
@@ -120,11 +120,70 @@ def buscar_sensor(controller):
 
     pausar()
 
+def mostrar_hierarquia(controller):
+    print("\n========== ESTRUTURA HIERÁRQUICA (BST por sensor_id) ==========")
 
-def mostrar_hierarquia():
-    print("\n========== ESTRUTURA HIERÁRQUICA ==========")
-    cos = estrutura_hierarquica()
-    cos.exibir()
+    leituras = controller.obter_leituras()
+
+    if not leituras:
+        print("\nNenhuma leitura disponível. Use a opção 1 - Telemetria primeiro.")
+        pausar()
+        return
+
+    raiz = None
+    for leitura in leituras:
+        raiz = inserir(raiz, leitura)
+
+    while True:
+        print("\n1 - Buscar por sensor_id")
+        print("2 - Listar em ordem")
+        print("3 - Pré / Pós-ordem")
+        print("4 - Verificar balanceamento")
+        print("0 - Voltar")
+
+        opcao = input("\nDigite o número: ")
+
+        if opcao == "1":
+            try:
+                sensor_id = int(input("sensor_id: "))
+            except ValueError:
+                print("\nID inválido.")
+                continue
+
+            no = buscar(raiz, sensor_id)
+            if no:
+                print(f"\nSensor {no.sensor_id} — {len(no.leituras)} leitura(s):")
+                for leitura in no.leituras:
+                    print(leitura)
+            else:
+                print("\nNenhum sensor encontrado com esse ID.")
+
+        elif opcao == "2":
+            print("\nEM ORDEM (por sensor_id crescente):")
+            for no in em_ordem(raiz):
+                print(f"sensor_id {no.sensor_id}: {len(no.leituras)} leitura(s)")
+
+        elif opcao == "3":
+            print("\nPRÉ-ORDEM:")
+            for no in pre_ordem(raiz):
+                print(f"sensor_id {no.sensor_id}")
+
+            print("\nPÓS-ORDEM:")
+            for no in pos_ordem(raiz):
+                print(f"sensor_id {no.sensor_id}")
+
+        elif opcao == "4":
+            if esta_balanceada(raiz):
+                print("\nA árvore está balanceada.")
+            else:
+                print("\nA árvore NÃO está balanceada.")
+
+        elif opcao == "0":
+            break
+
+        else:
+            print("\nOpção inválida.")
+
     pausar()
 
 
@@ -151,7 +210,7 @@ def main():
             buscar_sensor(controller)
 
         elif opcao == "5":
-            mostrar_hierarquia()
+            mostrar_hierarquia(controller)
 
         elif opcao == "6":
             print("\nRelatórios - ainda não implementados.")
@@ -168,3 +227,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
