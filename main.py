@@ -223,7 +223,7 @@ def main():
             mostrar_hierarquia(controller)
 
         elif opcao == "6":
-    gerar_relatorio(controller)
+            gerar_relatorio(controller)
 
         elif opcao == "0":
             print("\nEncerrando o PowerGrid Core...")
@@ -231,7 +231,6 @@ def main():
 
         else:
             print("\nOpção inválida. Escolha um número do menu.")
-            pausar()
 
 
 if __name__ == "__main__":
