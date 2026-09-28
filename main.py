@@ -1,6 +1,6 @@
 from controller.PowerGrid import PowerGrid
 from model.hierarquia import inserir, buscar, em_ordem, pre_ordem, pos_ordem, esta_balanceada
-
+from service.Relatorio import Relatorio
 
 def mostrar_menu():
     print("\n========================================")
@@ -186,6 +186,16 @@ def mostrar_hierarquia(controller):
 
     pausar()
 
+def gerar_relatorio(controller):
+    print("\n========== RELATÓRIOS ==========")
+
+    leituras = controller.obter_leituras()
+
+    relatorio = Relatorio.gerar(leituras)
+
+    print(relatorio)
+
+    pausar()
 
 def main():
 
@@ -213,8 +223,7 @@ def main():
             mostrar_hierarquia(controller)
 
         elif opcao == "6":
-            print("\nRelatórios - ainda não implementados.")
-            pausar()
+    gerar_relatorio(controller)
 
         elif opcao == "0":
             print("\nEncerrando o PowerGrid Core...")
